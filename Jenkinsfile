@@ -1,16 +1,19 @@
-pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
-    stages {
-        stage('Build') { 
-            steps {
-                sh 'mvn -B -DskipTests clean package' 
-            }
-        }
-    }
+node {
+   // Mark the code checkout 'stage'....
+   stage 'Checkout'
+
+   // Checkout code from repository
+   checkout scm
+
+   // Get the maven tool.
+   // ** NOTE: This 'M3' maven tool must be configured
+   // **       in the global configuration.
+   def mvnHome = tool 'M3'
+
+   // Mark the code build 'stage'....
+   stage 'Build'
+   // Run the maven build
+   sh "${mvnHome}/bin/mvn clean install"
 }
+
 
