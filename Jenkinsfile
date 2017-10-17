@@ -13,7 +13,7 @@ node {
    // Mark the code build 'stage'....
    stage 'Build'
    // Run the maven build
-   sh "${M2}/mvn clean install"
+   /usr/local/maven3/apache-maven-3.2.1/bin/mvn clean install"
 }
 
 
